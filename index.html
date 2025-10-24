@@ -16,6 +16,30 @@
       color: #8b5cf6;
       font-size: 2rem;
     }
+    .greeting {
+      font-size: 1.3rem;
+      color: #7e22ce;
+      background-color: #f3e8ff;
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(168, 85, 247, 0.2);
+      animation: fadeIn 1s ease-in-out;
+      margin-bottom: 25px;
+    }
+    .change-name {
+      background-color: #c084fc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 5px 12px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .change-name:hover {
+      background-color: #a855f7;
+    }
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -62,6 +86,9 @@
   </style>
 </head>
 <body>
+  <div id="greeting" class="greeting"></div>
+  <button class="change-name" onclick="gantiNama()">ganti nama</button>
+
   <h1>🌸 Pengingat & Jadwal Siswa-Siswi SMA MUHAMMADIYAH 1 PARE 🌸</h1>
   <p>catat, atur, dan jalanin — biar harimu semakin terarah 💜</p>
 
@@ -96,10 +123,36 @@
   </div>
 
   <br />
-  <button onclick="alert('semangat sekolahnya ya teman teman semua 💪💜')">💜 Semangat!</button>
+  <button onclick="alert('semangat sekolahnya ya teman-teman semua 💪💜')">💜 Semangat!</button>
 
   <script>
-    // ambil data dari localStorage
+    // fitur nama pengguna
+    function sapaPengguna() {
+      let nama = localStorage.getItem("namaPengguna");
+
+      if (!nama) {
+        nama = prompt("hai! siapa namamu? 💜");
+        if (nama) {
+          localStorage.setItem("namaPengguna", nama);
+        } else {
+          nama = "teman";
+        }
+      }
+
+      document.getElementById("greeting").innerHTML = `hai, <b>${nama}</b>! siap ngatur harimu hari ini? 🌸`;
+    }
+
+    function gantiNama() {
+      const namaBaru = prompt("mau ganti nama jadi siapa? 💫");
+      if (namaBaru) {
+        localStorage.setItem("namaPengguna", namaBaru);
+        sapaPengguna();
+      }
+    }
+
+    sapaPengguna();
+
+    // data utama
     const data = JSON.parse(localStorage.getItem("dataSMA")) || {
       kebutuhan: ["Buku catatan", "LKS", "Alat tulis", "Seragam sekolah"],
       tugas: [
